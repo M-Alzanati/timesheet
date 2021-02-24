@@ -1,0 +1,48 @@
+<div class="login-page">
+    <div class="content">
+        <!-- <h1 class="app-name">Sb Admin Material</h1> -->
+        <form class="login-form" fxFlex [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+            <div class="text-center">
+                <h2 class="app-name">TimeSheet System</h2>
+            </div>
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Full Name" formControlName="fullName">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Email" formControlName="email">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Mobile Number" formControlName="phone">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput type="password" placeholder="Password" formControlName="password">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill fxLayoutAlign="center">
+                    <button mat-raised-button style="width: 60%;" color="primary" class="w-100" type="submit">Register</button>
+                </div>
+            </div>
+            <div fxFlex fxLayout="row" fxLayout.lt-md="column" style="margin: 40px 0 30px 0">
+                <div fxFlex fxLayoutAlign="center">
+                    <a href="/login">Login ?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

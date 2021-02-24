@@ -19,6 +19,7 @@ namespace TimeSheetAPI
                 })
                 .ConfigureLogging(builder => 
                 {
+                    builder.SetMinimumLevel(LogLevel.Trace);
                     builder.AddLog4Net();
                 });
     }

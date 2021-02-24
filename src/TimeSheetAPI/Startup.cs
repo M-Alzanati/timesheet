@@ -95,6 +95,9 @@ namespace TimeSheetAPI
             });
 
             services.AddScoped<IUserService, UserService>();
+
+            // Register the Swagger services
+            services.AddSwaggerDocument();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -105,6 +108,8 @@ namespace TimeSheetAPI
             }
 
             app.UseStaticFiles();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
             app.UseHttpsRedirection();
             app.UseCors();
             app.UseRouting();

@@ -35,7 +35,7 @@ namespace TimeSheetAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("/api/account/register")]
-        public async Task<IActionResult> Register(RegisterViewModel creds)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel creds)
         {
             _logger.LogInformation($"/api/account/register -> [{creds.Email}]");
 
@@ -48,7 +48,7 @@ namespace TimeSheetAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("/api/account/login")]
-        public async Task<IActionResult> Login(LoginViewModel creds)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel creds)
         {
             _logger.LogInformation($"/api/account/login -> [{creds.Email}]");
 
@@ -58,14 +58,16 @@ namespace TimeSheetAPI.Controllers
                 if (await DoLogin(user, creds.Password))
                 {
                     var token = _userService.Authenticate(
-                    new AuthenticateRequest
-                    {
-                        Password = creds.Password,
-                        Username = creds.Email
-                    });
+                        new AuthenticateRequest
+                        {
+                            Password = creds.Password,
+                            Username = creds.Email
+                        });
                     return Ok(token);
                 }
             }
+
+            _logger.LogWarning($"Bad Request /api/account/login -> [{creds.Email}]");
             return BadRequest();
         }
 
@@ -98,8 +100,8 @@ namespace TimeSheetAPI.Controllers
                 {
                     UserName = creds.Email,
                     Email = creds.Email,
-                    FirstName = creds.FirstName,
-                    LastName = creds.LastName
+                    FullName = creds.FullName,
+                    PhoneNumber = creds.Phone
                 };
                 var result = await _userManager.CreateAsync(user, creds.Password);
                 return result.Succeeded;

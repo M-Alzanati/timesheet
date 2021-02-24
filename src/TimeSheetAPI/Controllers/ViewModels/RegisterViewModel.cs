@@ -5,10 +5,11 @@ namespace TimeSheetAPI.Controllers.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        public string FirstName { get; set; }
+        public string FullName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        [Phone]
+        public string Phone { get; set; }
 
         [Required]
         [EmailAddress]
@@ -17,9 +18,5 @@ namespace TimeSheetAPI.Controllers.ViewModels
         [Required]
         [MinLength(8)]
         public string Password { get; set; }
-
-        [Required]
-        [MinLength(8)]
-        public string ConfirmPassword { get; set; }
     }
 }

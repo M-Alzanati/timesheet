@@ -11,8 +11,6 @@ namespace TimeSheetAPI.Models
             Email = userName;
         }
 
-        public string FirstName { set; get; }
-
-        public string LastName { set; get; }
+        public string FullName { set; get; }
     }
 }

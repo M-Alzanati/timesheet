@@ -4,20 +4,17 @@ namespace TimeSheetAPI.Models
     {
         public string Id { get; set; }
         
-        public string FirstName { get; set; }
+        public string FullName { get; set; }
         
-        public string LastName { get; set; }
-        
-        public string Username { get; set; }
+        public string Phone { get; set; }
         
         public string Token { get; set; }
 
         public AuthenticateResponse(MyIdentityUser user, string token)
         {
             Id = user.Id;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
-            Username = user.Email;
+            FullName = user.FullName;
+            Phone = user.PhoneNumber;
             Token = token;
         }
     }
