@@ -1,4 +1,6 @@
-namespace TimeSheetAPI.Models
+using TimeSheetAPI.Models;
+
+namespace TimeSheetAPI.Services
 {
     public class AuthenticateResponse
     {

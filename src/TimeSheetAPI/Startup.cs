@@ -122,8 +122,17 @@ namespace TimeSheetAPI
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "../webapp";
-                spa.UseAngularCliServer("start");
+                var strategy = Configuration
+                    .GetValue<string>("DevTools:ConnectionStrategy");
+                if (strategy == "proxy")
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                }
+                else if (strategy == "managed")
+                {
+                    spa.Options.SourcePath = "../webapp";
+                    spa.UseAngularCliServer("start");
+                }
             });
 
             IdentitySeedData.SeedDatabase(app).Wait();

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TimeSheetAPI.Models
+namespace TimeSheetAPI.Services
 {
     public class AuthenticateRequest
     {

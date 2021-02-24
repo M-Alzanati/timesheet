@@ -5,7 +5,6 @@ using TimeSheetAPI.Controllers.ViewModels;
 using TimeSheetAPI.Models;
 using TimeSheetAPI.Services;
 using Microsoft.AspNetCore.Authorization;
-using log4net.Core;
 using Microsoft.Extensions.Logging;
 using System;
 
