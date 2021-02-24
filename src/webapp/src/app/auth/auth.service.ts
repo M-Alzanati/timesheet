@@ -34,8 +34,9 @@ export class AuthenticationService extends BaseService {
         return this.http.post('/api/account/register', model, this.httpOptions).pipe(
             map(response => {
                 if (response) {
-                    debugger;
                     return true;
+                } else {
+                    return false;
                 }
             }),
             catchError(e => {
@@ -49,8 +50,10 @@ export class AuthenticationService extends BaseService {
             map(response => {
                 if (response) {
                     localStorage.removeItem('token');
+                    return true;
+                } else {
+                    return false;
                 }
-                return true;
             }),
             catchError(e => {
                 this.authenticated = false;

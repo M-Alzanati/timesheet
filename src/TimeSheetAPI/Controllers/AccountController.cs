@@ -7,6 +7,7 @@ using TimeSheetAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using log4net.Core;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace TimeSheetAPI.Controllers
 {
@@ -76,8 +77,16 @@ namespace TimeSheetAPI.Controllers
         public async Task<IActionResult> Logout()
         {
             _logger.LogInformation($"/api/account/logout");
-            await _signInManager.SignOutAsync();
-            return Ok();
+            try
+            {
+                await _signInManager.SignOutAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"/api/account/logout", ex);
+            }
+
+            return Ok("true");
         }
 
         private async Task<bool> DoLogin(MyIdentityUser user, string password)
@@ -94,7 +103,7 @@ namespace TimeSheetAPI.Controllers
         private async Task<bool> DoRegister(RegisterViewModel creds)
         {
             var user = await _userManager.FindByNameAsync(creds.Email);
-            if (user != null)
+            if (user == null)
             {
                 user = new MyIdentityUser
                 {
