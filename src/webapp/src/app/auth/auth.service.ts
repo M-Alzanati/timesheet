@@ -18,9 +18,12 @@ export class AuthenticationService extends BaseService {
     login(model: LoginModel): Observable<boolean> {
         return this.http.post('/api/account/login', model, this.httpOptions).pipe(
             map((response: any) => {
-                if (response) {
+                if (response && response.token) {
                     this.authenticated = true;
                     localStorage.setItem('token', response.token);
+                    localStorage.setItem('fullName', response.fullName);
+                    localStorage.setItem('email', model.Email);
+                    localStorage.setItem('uuid', response.id);
                 }
                 return this.authenticated;
             }),
@@ -50,6 +53,9 @@ export class AuthenticationService extends BaseService {
             map(response => {
                 if (response) {
                     localStorage.removeItem('token');
+                    localStorage.removeItem('fullName');
+                    localStorage.removeItem('email');
+                    localStorage.removeItem('uuid');
                     return true;
                 } else {
                     return false;
@@ -63,5 +69,17 @@ export class AuthenticationService extends BaseService {
 
     getAccessToken(): string {
         return localStorage.getItem('token');
+    }
+
+    getFullName(): string {
+        return localStorage.getItem('fullName');
+    }
+
+    getEmail(): string {
+        return localStorage.getItem('email');
+    }
+
+    getUUId(): string {
+        return localStorage.getItem('uuid');
     }
 }

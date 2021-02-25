@@ -76,10 +76,11 @@ namespace TimeSheetAPI
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;  
             }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                options.RequireHttpsMetadata = true;
+                options.RequireHttpsMetadata = false;
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -115,6 +116,7 @@ namespace TimeSheetAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -122,8 +124,7 @@ namespace TimeSheetAPI
 
             app.UseSpa(spa =>
             {
-                var strategy = Configuration
-                    .GetValue<string>("DevTools:ConnectionStrategy");
+                var strategy = Configuration.GetValue<string>("DevTools:ConnectionStrategy");
                 if (strategy == "proxy")
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");

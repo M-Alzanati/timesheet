@@ -10,18 +10,26 @@ import { AuthenticationService } from 'src/app/auth/auth.service';
 })
 export class TopnavComponent implements OnInit {
     public pushRightClass: string;
+    public fullName: string;
+    public date: string;
 
-    constructor(public router: Router, private auth: AuthenticationService, 
+    constructor(public router: Router, private auth: AuthenticationService,
         private translate: TranslateService) {
         this.router.events.subscribe(val => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
                 this.toggleSidebar();
             }
         });
+
+        setInterval(() => {
+            const currentDate = new Date();
+            this.date = currentDate.toLocaleString();
+        }, 1000);
     }
 
     ngOnInit() {
         this.pushRightClass = 'push-right';
+        this.fullName = this.auth.getFullName();
     }
 
     isToggled(): boolean {
