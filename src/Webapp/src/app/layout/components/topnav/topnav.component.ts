@@ -45,7 +45,14 @@ export class TopnavComponent implements OnInit {
     onLoggedout() {
         this.auth.logout().subscribe(
             res => {
-                if (res) this.router.navigate(['/login']);
+                if (res) {
+                    this.router.navigate(['/login']);
+                    this.auth.saveLogout(null).subscribe(
+                        (res) => {
+
+                        }
+                    );
+                }
             });
     }
 

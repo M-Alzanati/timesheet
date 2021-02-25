@@ -1,17 +1,17 @@
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace TimeSheetAPI.Models
 {
     public interface IUserLoginRepository
     {
-        IQueryable<UserLogin> GetUserLogins(string uuid);
+        Task<IEnumerable<UserLogin>> GetUserLogins(string uuid);
 
-        IQueryable<UserLogin> GetUserLogins(string uuid, DateTime dateTime);
+        Task<IEnumerable<UserLogout>> GetUserLogouts(string uuid);
         
-        bool SaveUserLogin(string uuid, DateTime login, DateTime logout);
+        Task<bool> SaveUserLoginAsync(string uuid, DateTime login);
 
-        bool SaveUserLogin(string uuid, IEnumerable<DateTime> login, IEnumerable<DateTime> logout);
+        Task<bool> SaveUserLogoutAsync(string uuid, DateTime logout);
     }
 }

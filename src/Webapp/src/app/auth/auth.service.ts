@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginModel } from './models/login-model';
 import { Observable, of } from 'rxjs';
 import { BaseService } from '../base.service';
+import { LogTimeRecord } from './models/log-time';
 
 @Injectable()
 export class AuthenticationService extends BaseService {
@@ -81,5 +82,59 @@ export class AuthenticationService extends BaseService {
 
     getUUId(): string {
         return localStorage.getItem('uuid');
+    }
+
+    saveLogin(time: Date): Observable<boolean> {
+        let model: LogTimeRecord = {
+            Time : null,
+            UUId : this.getUUId()
+        };
+        return this.saveLogTime('/api/timeSheet/logins/add', model);
+    }
+
+    saveLogout(time: Date): Observable<boolean> {
+        let model: LogTimeRecord = {
+            Time : null,
+            UUId : this.getUUId()
+        };
+        return this.saveLogTime('/api/timeSheet/logouts/add', model);
+    }
+
+    getLogins(): Observable<LoginModel[]> {
+        return this.getLogTimes(`/api/timeSheet/logins/${this.getUUId()}`);
+    }
+
+    getLogouts(): Observable<LoginModel[]> {
+        return this.getLogTimes(`/api/timeSheet/logouts/${this.getUUId()}`);
+    }
+    
+    private getLogTimes(url: string): Observable<LoginModel[]> {
+        return this.http.get(url).pipe(
+            map((response) => {
+                if (response) {
+                    return [];
+                } else {
+                    return [];
+                }
+            }),
+            catchError(e => {
+                return of([]);
+            })
+        );
+    }
+
+    private saveLogTime(url: string, model: LogTimeRecord): Observable<boolean> {
+        return this.http.post(url, model, this.httpOptions).pipe(
+            map((response) => {
+                if (response) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }),
+            catchError(e => {
+                return of(false);
+            })
+        );
     }
 }

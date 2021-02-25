@@ -79,13 +79,13 @@ namespace TimeSheetAPI.Controllers
             try
             {
                 await _signInManager.SignOutAsync();
+                return Ok("true");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"/api/account/logout", ex);
+                return BadRequest();
             }
-
-            return Ok("true");
         }
 
         private async Task<bool> DoLogin(MyIdentityUser user, string password)

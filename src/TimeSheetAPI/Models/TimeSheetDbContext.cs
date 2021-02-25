@@ -6,6 +6,8 @@ namespace TimeSheetAPI.Models
     {
         public DbSet<UserLogin> UserLogins { set; get; }
 
+        public DbSet<UserLogout> UserLogouts { set; get; }
+
         public TimeSheetDbContext(DbContextOptions<TimeSheetDbContext> options)
             : base(options)
         { }
@@ -15,6 +17,10 @@ namespace TimeSheetAPI.Models
             modelBuilder.Entity<UserLogin>()
                 .HasKey(c => c.Id)
                 .HasName("PrimaryKey_UserLoginId");
+            
+            modelBuilder.Entity<UserLogout>()
+                .HasKey(c => c.Id)
+                .HasName("PrimaryKey_UserLogoutId");
         }
     }
 }
