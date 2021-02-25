@@ -76,7 +76,7 @@ namespace TimeSheetAPI
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;  
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
@@ -95,10 +95,11 @@ namespace TimeSheetAPI
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
-
             // Register the Swagger services
             services.AddSwaggerDocument();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserLoginRepository, UserLoginRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -38,3 +38,46 @@
    at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context)
    at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IServerAddressesFeature addresses, KestrelServerOptions serverOptions, ILogger logger, Func`2 createBinding)
    at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+2021-02-25 16:27:33,817  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 16:27:33,829  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 16:27:33,830  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 16:27:33,830  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 16:27:33,830  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 16:27:56,605  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 2021-02-25 16:28:02,374  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 16:28:02,385  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 16:28:02,385  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 16:28:02,385  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 16:28:02,386  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 16:34:07,382  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 2021-02-25 16:38:08,262  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 16:38:08,273  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 16:38:08,274  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 16:38:08,274  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 16:38:08,274  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 16:38:48,415  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 2021-02-25 16:38:54,288  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 16:38:54,298  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 16:38:54,299  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 16:38:54,299  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 16:38:54,299  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 16:38:56,281  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 2021-02-25 16:39:02,274  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 16:39:02,284  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 16:39:02,285  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 16:39:02,286  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 16:39:02,286  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 16:39:56,754  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 2021-02-25 17:09:01,744  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 17:09:01,754  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 17:09:01,755  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 17:09:01,755  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 17:09:01,755  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 17:09:17,795  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 2021-02-25 17:09:23,244  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: https://localhost:5001
+ 2021-02-25 17:09:23,253  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Now listening on: http://localhost:5000
+ 2021-02-25 17:09:23,254  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2021-02-25 17:09:23,254  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Hosting environment: Development
+ 2021-02-25 17:09:23,254  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Content root path: /home/mohamed1993/projects/timesheet-tool/src/TimeSheetAPI
+ 2021-02-25 17:10:02,678  INFO Microsoft.Hosting.Lifetime.? [?] - MESSAGE: Application is shutting down...
+ 
