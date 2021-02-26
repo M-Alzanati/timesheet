@@ -42,7 +42,7 @@ export class AuthenticationService extends BaseService {
                     localStorage.setItem('uuid', response.id);
 
                     var now = new Date();
-                    this.saveLogin(now.toUTCString()).subscribe();
+                    this.saveLogin(now.toLocaleString()).subscribe();
                 }
                 return this.authenticated;
             }),
@@ -57,7 +57,7 @@ export class AuthenticationService extends BaseService {
             map(response => {
                 if (response) {
                     var now = new Date();
-                    this.saveLogout(now.toUTCString()).subscribe();
+                    this.saveLogout(now.toLocaleString()).subscribe();
                     localStorage.removeItem('token');
                     localStorage.removeItem('fullName');
                     localStorage.removeItem('email');
@@ -118,15 +118,15 @@ export class AuthenticationService extends BaseService {
     }
 
     getLogins(): Observable<LoginModel[]> {
-        return this.getLogTimes(`/api/timeSheet/logins/${this.getUUId()}`);
+        return this.getLogTimes(`/api/timeSheet/logins/today/${this.getUUId()}`);
     }
 
     getLogouts(): Observable<LoginModel[]> {
-        return this.getLogTimes(`/api/timeSheet/logouts/${this.getUUId()}`);
+        return this.getLogTimes(`/api/timeSheet/logouts/today/${this.getUUId()}`);
     }
 
-    getLastLogin(): Observable<string> {
-        return this.http.get(`/api/timeSheet/logins/last/${this.getUUId()}`, this.httpOptions)
+    getFirstLogin(): Observable<string> {
+        return this.http.get(`/api/timeSheet/logins/first/${this.getUUId()}`, this.httpOptions)
             .pipe(
                 map((res: any) => {
                     if (res) return res.time;
@@ -153,9 +153,9 @@ export class AuthenticationService extends BaseService {
 
     private getLogTimes(url: string): Observable<LoginModel[]> {
         return this.http.get(url).pipe(
-            map((response) => {
+            map((response: any) => {
                 if (response) {
-                    return [];
+                    return response.times;
                 } else {
                     return [];
                 }

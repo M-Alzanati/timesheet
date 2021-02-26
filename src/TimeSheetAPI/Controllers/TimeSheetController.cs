@@ -1,6 +1,6 @@
 using System;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +29,7 @@ namespace TimeSheetAPI.Controllers
             _logger.LogInformation($"/api/timeSheet/logins/add");
             try
             {
-                var time = DateTime.Parse(model.Time).ToUniversalTime();
+                var time = DateTime.Parse(model.Time);
                 await _repo.SaveUserLoginAsync(model.UUId, time);
                 return Ok("true");
             }
@@ -46,7 +46,7 @@ namespace TimeSheetAPI.Controllers
             _logger.LogInformation($"/api/timeSheet/logouts/add");
             try
             {
-                var time = DateTime.Parse(model.Time).ToUniversalTime();
+                var time = DateTime.Parse(model.Time);
                 await _repo.SaveUserLogoutAsync(model.UUId, time);
                 return Ok("true");
             }
@@ -57,43 +57,11 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
-        [HttpGet("/api/timeSheet/logins/{uuid}")]
-        public async Task<IActionResult> GetLogins([FromRoute] string uuid)
-        {
-            _logger.LogInformation($"/api/timeSheet/logins/{uuid}");
-            try
-            {
-                await _repo.GetUserLogins(uuid);
-                return Ok("true");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"/api/timeSheet/logins/{uuid}", ex);
-                return BadRequest();
-            }
-        }
-
-        [HttpGet("/api/timeSheet/logouts/{uuid}")]
-        public async Task<IActionResult> GetLogouts([FromRoute] string uuid)
-        {
-            _logger.LogInformation($"/api/timeSheet/logins/{uuid}");
-            try
-            {
-                var result = await _repo.GetUserLogouts(uuid);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"/api/timeSheet/logins/{uuid}", ex);
-                return BadRequest();
-            }
-        }
-
-        [HttpGet("/api/timeSheet/logins/last/{uuid}")]
+        [HttpGet("/api/timeSheet/logins/first/{uuid}")]
         public async Task<IActionResult> GetLastLogin([FromRoute] string uuid)
         {
-            _logger.LogInformation($"/api/timeSheet/logins/last/{uuid}");
-            var result = await _repo.GetLastLogin(uuid);
+            _logger.LogInformation($"/api/timeSheet/logins/first/{uuid}");
+            var result = await _repo.GetFirstLogin(uuid);
             return Ok(new { time = result });
         }
 
@@ -103,6 +71,38 @@ namespace TimeSheetAPI.Controllers
             _logger.LogInformation($"/api/timeSheet/logouts/last/{uuid}");
             var result = await _repo.GetLastLogout(uuid);
             return Ok(new { time = result });
+        }
+
+        [HttpGet("/api/timeSheet/logins/today/{uuid}")]
+        public async Task<IActionResult> GetTodaysLogins([FromRoute] string uuid)
+        {
+            _logger.LogInformation($"/api/timeSheet/logins/today/{uuid}");
+            try
+            {
+                var lst = await _repo.GetUserLogins(uuid);
+                return Ok(new { times = lst.Where(r => r.LoginTime.Date == DateTime.Now.Date) });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"/api/timeSheet/logins/today/{uuid}", ex);
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("/api/timeSheet/logouts/today/{uuid}")]
+        public async Task<IActionResult> GetTodaysLogouts([FromRoute] string uuid)
+        {
+            _logger.LogInformation($"/api/timeSheet/logouts/today/{uuid}");
+            try
+            {
+                var lst = await _repo.GetUserLogouts(uuid);
+                return Ok(new { times = lst.Where(r => r.LogoutTime.Date == DateTime.Now.Date) });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"/api/timeSheet/logouts/today/{uuid}", ex);
+                return BadRequest();
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TimeSheetAPI.Models
 
         Task<bool> SaveUserLogoutAsync(string uuid, DateTime logout);
 
-        Task<string> GetLastLogin(string uuid);
+        Task<string> GetFirstLogin(string uuid);
 
         Task<string> GetLastLogout(string uuid);
     }
@@ -34,11 +34,11 @@ namespace TimeSheetAPI.Models
             _logger = logger;
         }
 
-        public async Task<string> GetLastLogin(string uuid)
+        public async Task<string> GetFirstLogin(string uuid)
         {
             var res = await (from day in _ctx.UserLogins
                              where day.UUId == uuid
-                             orderby day.LoginTime descending
+                             orderby day.LoginTime ascending
                              select day).FirstOrDefaultAsync();
             if (res != null)
             {
