@@ -29,7 +29,8 @@ namespace TimeSheetAPI.Controllers
             _logger.LogInformation($"/api/timeSheet/logins/add");
             try
             {
-                await _repo.SaveUserLoginAsync(model.UUId, model.Time);
+                var time = DateTime.Parse(model.Time).ToUniversalTime();
+                await _repo.SaveUserLoginAsync(model.UUId, time);
                 return Ok("true");
             }
             catch (Exception ex)
@@ -45,7 +46,8 @@ namespace TimeSheetAPI.Controllers
             _logger.LogInformation($"/api/timeSheet/logouts/add");
             try
             {
-                await _repo.SaveUserLogoutAsync(model.UUId, model.Time);
+                var time = DateTime.Parse(model.Time).ToUniversalTime();
+                await _repo.SaveUserLogoutAsync(model.UUId, time);
                 return Ok("true");
             }
             catch (Exception ex)
@@ -85,6 +87,22 @@ namespace TimeSheetAPI.Controllers
                 _logger.LogError($"/api/timeSheet/logins/{uuid}", ex);
                 return BadRequest();
             }
+        }
+
+        [HttpGet("/api/timeSheet/logins/last/{uuid}")]
+        public async Task<IActionResult> GetLastLogin([FromRoute] string uuid)
+        {
+            _logger.LogInformation($"/api/timeSheet/logins/last/{uuid}");
+            var result = await _repo.GetLastLogin(uuid);
+            return Ok(new { time = result });
+        }
+
+        [HttpGet("/api/timeSheet/logouts/last/{uuid}")]
+        public async Task<IActionResult> GetLastLogout([FromRoute] string uuid)
+        {
+            _logger.LogInformation($"/api/timeSheet/logouts/last/{uuid}");
+            var result = await _repo.GetLastLogout(uuid);
+            return Ok(new { time = result });
         }
     }
 }

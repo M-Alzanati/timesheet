@@ -7,6 +7,8 @@ using TimeSheetAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace TimeSheetAPI.Controllers
 {
@@ -84,6 +86,26 @@ namespace TimeSheetAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"/api/account/logout", ex);
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpPost("/api/account/authenticate")]
+        public IActionResult Authenticated()
+        {
+            _logger.LogInformation($"/api/account/authenticate");
+            try
+            {
+                if (_signInManager.IsSignedIn(User))
+                {
+                    return Ok("true");
+                }
+                return Ok("false");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"/api/account/authenticate", ex);
                 return BadRequest();
             }
         }

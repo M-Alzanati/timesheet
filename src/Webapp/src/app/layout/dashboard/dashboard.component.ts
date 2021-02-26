@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthenticationService } from 'src/app/auth/auth.service';
 
 export interface PeriodicElement {
     name: string;
@@ -26,16 +27,30 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardComponent implements OnInit {
     displayedColumns = ['position', 'name', 'weight', 'symbol'];
     dataSource = new MatTableDataSource(ELEMENT_DATA);
+    lastLogin: string;
+    lastLogout: string;
 
     applyFilter(filterValue: string) {
-        filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+        filterValue = filterValue.trim();
+        filterValue = filterValue.toLowerCase(); 
         this.dataSource.filter = filterValue;
     }
 
-    constructor() {
+    constructor(private auth: AuthenticationService) {
 
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.auth.getLastLogin().subscribe(
+            (data) => {
+                this.lastLogin = data;
+            }
+        );
+
+        this.auth.getLastLogout().subscribe(
+            (data) => {
+                this.lastLogout = data;
+            }
+        );
+    }
 }

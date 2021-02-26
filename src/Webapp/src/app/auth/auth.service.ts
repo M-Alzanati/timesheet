@@ -16,24 +16,6 @@ export class AuthenticationService extends BaseService {
         super();
     }
 
-    login(model: LoginModel): Observable<boolean> {
-        return this.http.post('/api/account/login', model, this.httpOptions).pipe(
-            map((response: any) => {
-                if (response && response.token) {
-                    this.authenticated = true;
-                    localStorage.setItem('token', response.token);
-                    localStorage.setItem('fullName', response.fullName);
-                    localStorage.setItem('email', model.Email);
-                    localStorage.setItem('uuid', response.id);
-                }
-                return this.authenticated;
-            }),
-            catchError(e => {
-                this.authenticated = false;
-                return of(false);
-            }));
-    }
-
     register(model: LoginModel): Observable<boolean> {
         return this.http.post('/api/account/register', model, this.httpOptions).pipe(
             map(response => {
@@ -49,10 +31,33 @@ export class AuthenticationService extends BaseService {
             }));
     }
 
+    login(model: LoginModel): Observable<boolean> {
+        return this.http.post('/api/account/login', model, this.httpOptions).pipe(
+            map((response: any) => {
+                if (response && response.token) {
+                    this.authenticated = true;
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('fullName', response.fullName);
+                    localStorage.setItem('email', model.Email);
+                    localStorage.setItem('uuid', response.id);
+
+                    var now = new Date();
+                    this.saveLogin(now.toUTCString()).subscribe();
+                }
+                return this.authenticated;
+            }),
+            catchError(e => {
+                this.authenticated = false;
+                return of(false);
+            }));
+    }
+
     logout(): Observable<boolean> {
         return this.http.post('/api/account/logout', null, this.httpOptions).pipe(
             map(response => {
                 if (response) {
+                    var now = new Date();
+                    this.saveLogout(now.toUTCString()).subscribe();
                     localStorage.removeItem('token');
                     localStorage.removeItem('fullName');
                     localStorage.removeItem('email');
@@ -66,6 +71,18 @@ export class AuthenticationService extends BaseService {
                 this.authenticated = false;
                 return of(false);
             }));
+    }
+
+    authenticate(): Observable<boolean> {
+        return this.http.post('/api/account/authenticate', null, this.httpOptions).pipe(
+            map((res) => {
+                if (res) return true;
+                return false;
+            }),
+            catchError(e => {
+                return of(false);
+            })
+        );
     }
 
     getAccessToken(): string {
@@ -84,18 +101,18 @@ export class AuthenticationService extends BaseService {
         return localStorage.getItem('uuid');
     }
 
-    saveLogin(time: Date): Observable<boolean> {
+    saveLogin(time: string): Observable<boolean> {
         let model: LogTimeRecord = {
-            Time : null,
-            UUId : this.getUUId()
+            Time: time,
+            UUId: this.getUUId()
         };
         return this.saveLogTime('/api/timeSheet/logins/add', model);
     }
 
-    saveLogout(time: Date): Observable<boolean> {
+    saveLogout(time: string): Observable<boolean> {
         let model: LogTimeRecord = {
-            Time : null,
-            UUId : this.getUUId()
+            Time: time,
+            UUId: this.getUUId()
         };
         return this.saveLogTime('/api/timeSheet/logouts/add', model);
     }
@@ -107,7 +124,33 @@ export class AuthenticationService extends BaseService {
     getLogouts(): Observable<LoginModel[]> {
         return this.getLogTimes(`/api/timeSheet/logouts/${this.getUUId()}`);
     }
-    
+
+    getLastLogin(): Observable<string> {
+        return this.http.get(`/api/timeSheet/logins/last/${this.getUUId()}`, this.httpOptions)
+            .pipe(
+                map((res: any) => {
+                    if (res) return res.time;
+                    return null;
+                }),
+                catchError(e => {
+                    return of(e);
+                })
+            );
+    }
+
+    getLastLogout(): Observable<string> {
+        return this.http.get(`/api/timeSheet/logouts/last/${this.getUUId()}`, this.httpOptions)
+            .pipe(
+                map((res: any) => {
+                    if (res) return res.time;
+                    return null;
+                }),
+                catchError(e => {
+                    return of(e);
+                })
+            );
+    }
+
     private getLogTimes(url: string): Observable<LoginModel[]> {
         return this.http.get(url).pipe(
             map((response) => {

@@ -33,11 +33,6 @@ export class LoginComponent implements OnInit {
             res => {
                 if (res) {
                     this.router.navigate(['/app/dashboard']);
-                    this.auth.saveLogin(null).subscribe(
-                        (res) => {
-
-                        }
-                    );
                 }
             });
     }

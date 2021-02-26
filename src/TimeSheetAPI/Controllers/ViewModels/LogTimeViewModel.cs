@@ -6,6 +6,6 @@ namespace TimeSheetAPI.Controllers.ViewModels
     {
         public string UUId { set; get; }
 
-        public DateTime Time;
+        public string Time { set; get; }
     }
 }

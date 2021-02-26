@@ -1,10 +1,13 @@
 import { Injectable, Injector } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpHandler } from "@angular/common/http";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from "@angular/common/http";
 import { AuthenticationService } from "./auth.service";
+import { catchError } from "rxjs/operators";
+import { Observable, of, throwError } from "rxjs";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class UserRequestInterceptor implements HttpInterceptor {
-    constructor(private injector: Injector) {
+    constructor(private injector: Injector, private router: Router) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -21,6 +24,14 @@ export class UserRequestInterceptor implements HttpInterceptor {
             }
         });
         
-        return next.handle(req);
+        return next.handle(req).pipe(catchError(x => this.handleAuthError(x)));
+    }
+
+    private handleAuthError(err: HttpErrorResponse): Observable<any> {
+        if (err.status === 401 || err.status === 403) {
+            this.router.navigateByUrl(`/login`);
+            return of(err.message);
+        }
+        return throwError(err);
     }
 }
