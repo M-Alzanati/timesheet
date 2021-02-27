@@ -29,30 +29,38 @@
     </mat-card>
 </div>
 
-<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
-    <mat-card style="width: 60%;">
+<div class="mb-20" fxLayout>
+    <mat-card class="child-1" style="width: 55%; margin-right: 10px;">
         <div fxFlex>
             <app-stat [bgClass]="'info'" [icon]="'bookmark'" [content]="'Time Sheet History'"></app-stat>
             <br>
-            <table mat-table [dataSource]="logoutDataSource" class="mat-elevation-z8">
-                <ng-container matColumnDef="time">
-                    <th mat-header-cell *matHeaderCellDef style="font-size: large;background: #ec407a;color: white;font-size: large;font-weight: bold;">Todays Logout Times </th>
-                    <td mat-cell *matCellDef="let element" style="font-size: large;"> {{element.logoutTime | date:'medium'}} </td>
+            <table mat-table [dataSource]="timeSheetDataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: large;">Date </th>
+                    <td mat-cell *matCellDef="let element" style="font-size: large;"> {{element.date | date:'medium'}} </td>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <ng-container matColumnDef="loginTime">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: large;">Login Time</th>
+                    <td mat-cell *matCellDef="let element" style="font-size: large;"> {{element.login.ticks | date:'HH:mm'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="logoutTime">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: large;">Logout Time </th>
+                    <td mat-cell *matCellDef="let element" style="font-size: large;"> {{element.logout.ticks | date:'HH:mm'}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="timeSheetDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: timeSheetDisplayedColumns;"></tr>
             </table>
         </div>
     </mat-card>
-    <mat-card>
+    <mat-card class="child-2" style="width: 45%;">
         <div fxFlex>
-            <form fxFlex [formGroup]="timeSheetForm" (ngSubmit)="onFormSubmit()">
-                <div fxFlex fxLayout="row">
-                    <div fxFlex.md>
-                        <mat-label>Select Date: </mat-label>
-                    </div>
-                    <div fxFlex.md>
-                        <mat-form-field>
+            <app-stat [bgClass]="'warn'" [icon]="'bookmark'" [content]="'Register Login/Logout'"></app-stat>
+            <br>
+            <form fxLayout="column" fxLayoutGap="20px" [formGroup]="timeSheetForm" (ngSubmit)="onFormSubmit()">
+                <div class="child-1">
+                    <div fxLayout="row" fxLayoutGap="30px" style="align-items: baseline;">
+                        <mat-label class="child-1">Select Date: </mat-label>
+                        <mat-form-field class="child-2">
                             <input matInput [matDatepicker]="picker" formControlName="date">
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
@@ -60,24 +68,20 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div fxFlex fxLayout="row">
-                    <div fxFlex.md>
-                        <mat-label>Login Time: </mat-label>
-                    </div>
-                    <div fxFlex.md>
-                        <ngx-timepicker-field formControlName="loginTime"></ngx-timepicker-field>
+                <div class="child-2">
+                    <div fxLayout="row" fxLayoutGap="30px" style="align-items: baseline;">
+                        <mat-label class="child-1">Login Time: </mat-label>
+                        <ngx-timepicker-field class="child-2" formControlName="loginTime"></ngx-timepicker-field>
                     </div>
                 </div>
-                <div fxFlex fxLayout="row">
-                    <div fxFlex.md>
-                        <mat-label>Logout Time: </mat-label>
-                    </div>
-                    <div fxFlex.md>
-                        <ngx-timepicker-field formControlName="logoutTime"></ngx-timepicker-field>
+                <div class="child-3">
+                    <div fxLayout="row" fxLayoutGap="30px" style="align-items: baseline;">
+                        <mat-label class="child-1">Logout Time: </mat-label>
+                        <ngx-timepicker-field class="child-2" formControlName="logoutTime"></ngx-timepicker-field>
                     </div>
                 </div>
-                <div fxFlex fxLayout="row" fxLayout.lt-md="column">
-                    <div style="text-align: right;">
+                <div class="child-4">
+                    <div style="text-align: center;">
                         <button style="font-size: large;" mat-raised-button color="primary" type="submit">Submit</button>
                     </div>
                 </div>

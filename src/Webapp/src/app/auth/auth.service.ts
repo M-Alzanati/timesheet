@@ -164,6 +164,18 @@ export class AuthenticationService extends BaseService {
         )
     }
 
+    getTimeSheet(): Observable<any[]> {
+        return this.http.get(`/api/timesheet/${this.getUUId()}`).pipe(
+            map((res: any) => {
+                if (res) return res;
+                else return null;
+            }),
+            catchError(e => {
+                return of(null)
+            })
+        )
+    }
+
     private getLogTimes(url: string): Observable<LoginModel[]> {
         return this.http.get(url).pipe(
             map((response: any) => {

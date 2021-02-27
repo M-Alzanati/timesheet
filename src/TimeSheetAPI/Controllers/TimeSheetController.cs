@@ -120,5 +120,21 @@ namespace TimeSheetAPI.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("/api/timesheet/{uuid}")]
+        public async Task<IActionResult> GetTimeSheet([FromRoute] string uuid)
+        {
+            _logger.LogInformation($"/api/timeSheet/{uuid}");
+            try
+            {
+                var res = await _repo.GetSubmissionSheets(uuid);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"/api/timeSheet/{uuid}", ex);
+                return BadRequest();
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { StatModule } from '../shared/modules/stat/stat.module';
+import { MessageBoxComponent } from './components/message-dialog/message-dialog-component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { StatModule } from '../shared/modules/stat/stat.module';
     declarations: [
         LayoutComponent,
         TopnavComponent,
-        SidebarComponent
+        SidebarComponent,
+        MessageBoxComponent
     ]
 
 })

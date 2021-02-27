@@ -23,6 +23,8 @@ namespace TimeSheetAPI.Models
         Task<string> GetLastLogout(string uuid);
 
         Task<bool> SaveOrUpdateTimeSheetAsync(string uuid, DateTime date, string login, string logout);
+
+        Task<IEnumerable<SubmissionSheet>> GetSubmissionSheets(string uuid);
     }
 
     public class UserLoginRepository : IUserLoginRepository
@@ -44,6 +46,8 @@ namespace TimeSheetAPI.Models
 
         public async Task<string> GetFirstLogin(string uuid)
         {
+            _logger?.LogDebug("GetFirstLogin", uuid);
+
             var res = await (from day in _ctx.UserLogins
                              where day.UUId == uuid
                              orderby day.LoginTime ascending
@@ -60,6 +64,8 @@ namespace TimeSheetAPI.Models
 
         public async Task<string> GetLastLogout(string uuid)
         {
+            _logger?.LogDebug("GetLastLogout", uuid);
+
             var res = await (from day in _ctx.UserLogouts
                              where day.UUId == uuid
                              orderby day.LogoutTime descending
@@ -76,16 +82,20 @@ namespace TimeSheetAPI.Models
 
         public async Task<IEnumerable<UserLogin>> GetUserLogins(string uuid)
         {
+            _logger?.LogDebug("GetUserLogins", uuid);
             return await _ctx.UserLogins.Where(r => r.UUId == uuid).AsQueryable().ToListAsync();
         }
 
         public async Task<IEnumerable<UserLogout>> GetUserLogouts(string uuid)
         {
+            _logger?.LogDebug("GetUserLogouts", uuid);
             return await _ctx.UserLogouts.Where(r => r.UUId == uuid).AsQueryable().ToListAsync();
         }
 
         public async Task<bool> SaveUserLoginAsync(string uuid, DateTime login)
         {
+            _logger?.LogDebug("SaveUserLoginAsync", uuid, login.ToString());
+
             try
             {
                 var userLogin = new UserLogin
@@ -107,6 +117,8 @@ namespace TimeSheetAPI.Models
 
         public async Task<bool> SaveUserLogoutAsync(string uuid, DateTime logout)
         {
+            _logger?.LogDebug("SaveUserLogoutAsync", uuid, logout.ToString());
+
             try
             {
                 var userLogout = new UserLogout
@@ -128,6 +140,8 @@ namespace TimeSheetAPI.Models
 
         public async Task<bool> SaveOrUpdateTimeSheetAsync(string uuid, DateTime date, string login, string logout)
         {
+            _logger?.LogDebug("SaveOrUpdateTimeSheetAsync", uuid, date.ToString(), login, logout);
+
             try
             {
                 var loginTime = DateTime.ParseExact(login, "h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
@@ -160,6 +174,14 @@ namespace TimeSheetAPI.Models
                 _logger?.LogError(ex, "Can't save TimeSheet");
                 return false;
             }
+        }
+
+        public async Task<IEnumerable<SubmissionSheet>> GetSubmissionSheets(string uuid)
+        {
+            _logger?.LogDebug("GetSubmissionSheets", uuid);
+
+            var lst = await _ctx.SubmissionSheets.Where(r => r.UUId == uuid).ToListAsync();
+            return lst;
         }
     }
 }
