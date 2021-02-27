@@ -13,7 +13,7 @@ A- Build Angular Application:
     1- Open Terminal or cmd then navigate to > timesheet-tool/src/Webapp
     2- Install node_modules by typing > npm install
 
-Done !!
+Done Now we are ready to build API
 
 B- Build .Net Core Application:
     1- Open Termincal or cmd then navigate to > timesheet-tool/src/TimeSheetAPI
@@ -24,5 +24,8 @@ B- Build .Net Core Application:
 
 Done !!
 
-This will create 2 databases (Users, data)
-Please register new user and start test system
+This will create 2 databases (TimeSheetAppDb, TimeSheetAppUsersDb)
+Please register new user and start test system.
+
+
+Happy Coding :)
