@@ -6,6 +6,7 @@ import { LoginModel } from './models/login-model';
 import { Observable, of } from 'rxjs';
 import { BaseService } from '../base.service';
 import { LogTimeRecord } from './models/log-time';
+import { SubmissionSheetModel } from './models/submission-sheet-model';
 
 @Injectable()
 export class AuthenticationService extends BaseService {
@@ -149,6 +150,18 @@ export class AuthenticationService extends BaseService {
                     return of(e);
                 })
             );
+    }
+
+    saveTimeSheet(model: SubmissionSheetModel): Observable<boolean> {
+        return this.http.post('/api/timeSheet/register', model, this.httpOptions).pipe(
+            map((res) => {
+                if (res) return true;
+                else return false;
+            }),
+            catchError(e => {
+                return of(e);
+            })
+        )
     }
 
     private getLogTimes(url: string): Observable<LoginModel[]> {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
 
 namespace TimeSheetAPI.Models
 {
@@ -20,6 +21,8 @@ namespace TimeSheetAPI.Models
         Task<string> GetFirstLogin(string uuid);
 
         Task<string> GetLastLogout(string uuid);
+
+        Task<bool> SaveOrUpdateTimeSheetAsync(string uuid, DateTime date, string login, string logout);
     }
 
     public class UserLoginRepository : IUserLoginRepository
@@ -114,6 +117,42 @@ namespace TimeSheetAPI.Models
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Can't save user login");
+                return false;
+            }
+        }
+
+        public async Task<bool> SaveOrUpdateTimeSheetAsync(string uuid, DateTime date, string login, string logout)
+        {
+            try
+            {
+                var loginTime = DateTime.ParseExact(login,"h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
+                var logoutTime = DateTime.ParseExact(logout,"h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
+                
+                var dbRecord = await _ctx.SubmissionSheets.FirstOrDefaultAsync(r => r.UUId == uuid && r.Date.Date == date.Date);
+                if (dbRecord != null)
+                {
+                    dbRecord.Login = loginTime;
+                    dbRecord.Logout = logoutTime;
+                    _ctx.SubmissionSheets.Update(dbRecord);
+                }
+                else
+                {
+                    dbRecord = new SubmissionSheet
+                    {
+                        UUId = uuid,
+                        Login = loginTime,
+                        Logout = logoutTime,
+                        Date = date
+                    };
+                    _ctx.SubmissionSheets.Add(dbRecord);
+                }
+
+                await _ctx.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Can't save TimeSheet");
                 return false;
             }
         }

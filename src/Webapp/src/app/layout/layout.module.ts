@@ -6,13 +6,17 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { StatModule } from '../shared/modules/stat/stat.module';
 
 @NgModule({
     imports: [
         CommonModule,
         LayoutRoutingModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule,
+        MatDatepickerModule,
+        StatModule,
     ],
     declarations: [
         LayoutComponent,

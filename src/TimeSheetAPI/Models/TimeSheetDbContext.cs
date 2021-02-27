@@ -8,6 +8,8 @@ namespace TimeSheetAPI.Models
 
         public DbSet<UserLogout> UserLogouts { set; get; }
 
+        public DbSet<SubmissionSheet> SubmissionSheets { set; get; }
+
         public TimeSheetDbContext(DbContextOptions<TimeSheetDbContext> options)
             : base(options)
         { }
@@ -17,10 +19,13 @@ namespace TimeSheetAPI.Models
             modelBuilder.Entity<UserLogin>()
                 .HasKey(c => c.Id)
                 .HasName("PrimaryKey_UserLoginId");
-            
+
             modelBuilder.Entity<UserLogout>()
                 .HasKey(c => c.Id)
                 .HasName("PrimaryKey_UserLogoutId");
+
+             modelBuilder.Entity<SubmissionSheet>()
+                .HasKey(c => c.Id);
         }
     }
 }

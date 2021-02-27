@@ -104,5 +104,21 @@ namespace TimeSheetAPI.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("/api/timeSheet/register")]
+        public async Task<IActionResult> RegisterTimeSheet([FromBody] SubmitSheetViewModel model)
+        {
+            _logger.LogInformation($"/api/timeSheet/register");
+            try
+            {
+                var res = await _repo.SaveOrUpdateTimeSheetAsync(model.UUId, model.Date, model.LoginTime, model.LogoutTime);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"/api/timeSheet/register", ex);
+                return BadRequest();
+            }
+        }
     }
 }

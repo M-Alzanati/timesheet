@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/auth/auth.service';
 
@@ -18,7 +19,13 @@ export class DashboardComponent implements OnInit {
     logoutDataSource = new MatTableDataSource([]);
     firstLogin: string;
     lastLogout: string;
-
+    
+    timeSheetForm: FormGroup = new FormGroup({
+        date: new FormControl(new Date()),
+        loginTime: new FormControl(new Date().toTimeString()),
+        logoutTime: new FormControl(new Date().toTimeString())
+    });
+    
     constructor(private auth: AuthenticationService) {
 
     }
@@ -54,5 +61,18 @@ export class DashboardComponent implements OnInit {
         filterValue = filterValue.toLowerCase();
         this.loginDataSource.filter = filterValue;
         this.logoutDataSource.filter = filterValue;
+    }
+
+    onFormSubmit() {
+        this.auth.saveTimeSheet({
+            Date: this.timeSheetForm.get('date')?.value,
+            LoginTime: this.timeSheetForm.get('loginTime')?.value,
+            LogoutTime: this.timeSheetForm.get('logoutTime')?.value,
+            UUId: this.auth.getUUId()
+        }).subscribe(
+            (res) => {
+                
+            }
+        )
     }
 }

@@ -3,9 +3,6 @@
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/app/dashboard']">
             <mat-icon class="sidenav-icon">dashboard</mat-icon> {{ 'Dashboard' | translate }}
         </a>
-        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/app/submit_sheet']">
-            <mat-icon class="sidenav-icon">access_time</mat-icon> {{ 'Schedule' | translate }}
-        </a>
         <a mat-list-item [routerLinkActive]="'active'" (click)="onLoggedout()">
             <mat-icon class="sidenav-icon">logout</mat-icon> {{ 'Log Out' | translate }}
         </a>

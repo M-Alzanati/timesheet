@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeSheetAPI.Models;
 
 namespace TimeSheetAPI.Migrations.TimeSheetDb
 {
     [DbContext(typeof(TimeSheetDbContext))]
-    partial class TimeSheetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210226210749_AddSubmissionSheet")]
+    partial class AddSubmissionSheet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,14 +25,11 @@ namespace TimeSheetAPI.Migrations.TimeSheetDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("Login")
                         .HasColumnType("datetime");
 
-                    b.Property<TimeSpan>("Login")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("Logout")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("Logout")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("UUId")
                         .HasColumnType("text");
