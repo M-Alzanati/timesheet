@@ -31,6 +31,11 @@ namespace TimeSheetAPI.Models
 
         private ILogger<UserLoginRepository> _logger;
 
+        public UserLoginRepository(TimeSheetDbContext ctx)
+        {
+            _ctx = ctx;
+        }
+
         public UserLoginRepository(TimeSheetDbContext ctx, ILogger<UserLoginRepository> logger)
         {
             _ctx = ctx;
@@ -95,7 +100,7 @@ namespace TimeSheetAPI.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Can't save user login");
+                _logger?.LogError(ex, "Can't save user login");
                 return false;
             }
         }
@@ -116,7 +121,7 @@ namespace TimeSheetAPI.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Can't save user login");
+                _logger?.LogError(ex, "Can't save user login");
                 return false;
             }
         }
@@ -125,9 +130,9 @@ namespace TimeSheetAPI.Models
         {
             try
             {
-                var loginTime = DateTime.ParseExact(login,"h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
-                var logoutTime = DateTime.ParseExact(logout,"h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
-                
+                var loginTime = DateTime.ParseExact(login, "h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
+                var logoutTime = DateTime.ParseExact(logout, "h:mm tt", CultureInfo.InvariantCulture).TimeOfDay;
+
                 var dbRecord = await _ctx.SubmissionSheets.FirstOrDefaultAsync(r => r.UUId == uuid && r.Date.Date == date.Date);
                 if (dbRecord != null)
                 {
@@ -152,7 +157,7 @@ namespace TimeSheetAPI.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Can't save TimeSheet");
+                _logger?.LogError(ex, "Can't save TimeSheet");
                 return false;
             }
         }

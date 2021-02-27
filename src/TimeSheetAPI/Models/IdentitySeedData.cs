@@ -11,14 +11,14 @@ namespace TimeSheetAPI.Models
     public static class IdentitySeedData
     {
         private const string adminUser = "admin@gmail.com";
-        
+
         private const string adminPassword = "Admin@123";
 
         public static async Task SeedDatabase(IApplicationBuilder app)
         {
             var provider = app.ApplicationServices.CreateScope().ServiceProvider;
-
-            provider.GetRequiredService<IdentityDataContext>().Database.Migrate();  // do pending migrations
+            var dbCtx = provider.GetRequiredService<IdentityDataContext>();
+            dbCtx.Database.Migrate();  // do pending migrations
 
             var userManager = provider.GetRequiredService<UserManager<MyIdentityUser>>();
             var user = await userManager.FindByNameAsync(adminUser);
@@ -32,6 +32,13 @@ namespace TimeSheetAPI.Models
                     throw new Exception("Cannot create user: "
                         + result.Errors.FirstOrDefault());
                 }
+            }
+
+            var testUser = await userManager.FindByNameAsync("test@gmail.com");
+            if (testUser != null)
+            {
+                dbCtx.Users.Remove(testUser);
+                await dbCtx.SaveChangesAsync();
             }
         }
     }
