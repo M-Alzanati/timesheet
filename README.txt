@@ -27,5 +27,8 @@ Done !!
 This will create 2 databases (TimeSheetAppDb, TimeSheetAppUsersDb)
 Please register new user and start test system.
 
+Regards TimeSheetAPI.Tests, this project contains two different testing techniques:
+1- Integration test in (AccountControllerTests, TimeSheetControllerTests)
+2- Unit test in UserLoginTests
 
 Happy Coding :)
