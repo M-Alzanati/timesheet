@@ -132,7 +132,7 @@ namespace TimeSheetAPI
                 }
                 else if (strategy == "managed")
                 {
-                    spa.Options.SourcePath = "../webapp";
+                    spa.Options.SourcePath = "../Webapp";
                     spa.UseAngularCliServer("start");
                 }
             });

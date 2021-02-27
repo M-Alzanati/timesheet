@@ -25,7 +25,7 @@ namespace TimeSheetAPI.Models
 
             if (user == null)
             {
-                user = new MyIdentityUser(adminUser);
+                user = new MyIdentityUser(adminUser){FullName = "Admin User"};
                 var result = await userManager.CreateAsync(user, adminPassword);
                 if (!result.Succeeded)
                 {
