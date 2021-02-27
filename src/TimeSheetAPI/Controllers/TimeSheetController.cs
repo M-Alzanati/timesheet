@@ -23,6 +23,11 @@ namespace TimeSheetAPI.Controllers
             _repo = repo;
         }
 
+        /// <summary>
+        /// Add user login
+        /// </summary>
+        /// <param name="model">{uuid, time}</param>
+        /// <returns>{boolean}</returns>
         [HttpPost("/api/timeSheet/logins/add")]
         public async Task<IActionResult> AddLogin([FromBody] LogTimeViewModel model)
         {
@@ -40,6 +45,11 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Add user logout
+        /// </summary>
+        /// <param name="model">{uuid, time}</param>
+        /// <returns>{boolean}</returns>
         [HttpPost("/api/timeSheet/logouts/add")]
         public async Task<IActionResult> AddLogout([FromBody] LogTimeViewModel model)
         {
@@ -57,14 +67,24 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// get first login
+        /// </summary>
+        /// <param name="uuid">{user_unique_id}</param>
+        /// <returns>{time}</returns>
         [HttpGet("/api/timeSheet/logins/first/{uuid}")]
-        public async Task<IActionResult> GetLastLogin([FromRoute] string uuid)
+        public async Task<IActionResult> GetFirstLogin([FromRoute] string uuid)
         {
             _logger.LogInformation($"/api/timeSheet/logins/first/{uuid}");
             var result = await _repo.GetFirstLogin(uuid);
             return Ok(new { time = result });
         }
 
+        /// <summary>
+        /// get last logout
+        /// </summary>
+        /// <param name="uuid">{user_unique_id}</param>
+        /// <returns>{time}</returns>
         [HttpGet("/api/timeSheet/logouts/last/{uuid}")]
         public async Task<IActionResult> GetLastLogout([FromRoute] string uuid)
         {
@@ -73,6 +93,11 @@ namespace TimeSheetAPI.Controllers
             return Ok(new { time = result });
         }
 
+        /// <summary>
+        /// Get today's logins
+        /// </summary>
+        /// <param name="uuid">{user_unique_id}</param>
+        /// <returns>[{time},{time}]</returns>
         [HttpGet("/api/timeSheet/logins/today/{uuid}")]
         public async Task<IActionResult> GetTodaysLogins([FromRoute] string uuid)
         {
@@ -89,6 +114,11 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get today's logouts
+        /// </summary>
+        /// <param name="uuid">{user_unique_id}</param>
+        /// <returns>[{time},{time}]</returns>
         [HttpGet("/api/timeSheet/logouts/today/{uuid}")]
         public async Task<IActionResult> GetTodaysLogouts([FromRoute] string uuid)
         {
@@ -105,6 +135,11 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Submit login/logut per day, each day contains only one record
+        /// </summary>
+        /// <param name="model">{date, login, logout, uuid}</param>
+        /// <returns>{boolean}</returns>
         [HttpPost("/api/timeSheet/register")]
         public async Task<IActionResult> RegisterTimeSheet([FromBody] SubmitSheetViewModel model)
         {
@@ -121,6 +156,11 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get user timesheet
+        /// </summary>
+        /// <param name="uuid">{user_unique_id}</param>
+        /// <returns>[{date, login, logout}, {date, login, logout}]</returns>
         [HttpGet("/api/timesheet/{uuid}")]
         public async Task<IActionResult> GetTimeSheet([FromRoute] string uuid)
         {

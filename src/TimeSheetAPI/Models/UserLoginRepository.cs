@@ -10,20 +10,65 @@ namespace TimeSheetAPI.Models
 {
     public interface IUserLoginRepository
     {
+        /// <summary>
+        /// Get user logins
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
         Task<IEnumerable<UserLogin>> GetUserLogins(string uuid);
 
+        /// <summary>
+        /// Get user logouts
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
         Task<IEnumerable<UserLogout>> GetUserLogouts(string uuid);
 
+        /// <summary>
+        /// Save login
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
         Task<bool> SaveUserLoginAsync(string uuid, DateTime login);
 
+        /// <summary>
+        /// Save logout
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <param name="logout"></param>
+        /// <returns></returns>
         Task<bool> SaveUserLogoutAsync(string uuid, DateTime logout);
 
+        /// <summary>
+        /// Get First login
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
         Task<string> GetFirstLogin(string uuid);
 
+        /// <summary>
+        /// Get Last Logout
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
         Task<string> GetLastLogout(string uuid);
 
+        /// <summary>
+        /// Save TimeSheet
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <param name="date"></param>
+        /// <param name="login"></param>
+        /// <param name="logout"></param>
+        /// <returns></returns>
         Task<bool> SaveOrUpdateTimeSheetAsync(string uuid, DateTime date, string login, string logout);
 
+        /// <summary>
+        /// Get TimeSheet
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
         Task<IEnumerable<SubmissionSheet>> GetSubmissionSheets(string uuid);
     }
 

@@ -14,10 +14,24 @@ namespace TimeSheetAPI.Services
 {
     public interface IUserService
     {
+        /// <summary>
+        /// Authenticate user and generate token
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         AuthenticateResponse Authenticate(AuthenticateRequest model);
 
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<MyIdentityUser> GetAll();
 
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         MyIdentityUser GetById(string id);
     }
 

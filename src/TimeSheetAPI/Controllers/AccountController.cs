@@ -35,6 +35,11 @@ namespace TimeSheetAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Register new user to system
+        /// </summary>
+        /// <param name="creds">{FullName, Email, Phone, Password}</param>
+        /// <returns>{boolean}</returns>
         [AllowAnonymous]
         [HttpPost("/api/account/register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel creds)
@@ -48,6 +53,11 @@ namespace TimeSheetAPI.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Login To System and automatically save this to db
+        /// </summary>
+        /// <param name="creds">{Email, Password}</param>
+        /// <returns>{token}</returns>
         [AllowAnonymous]
         [HttpPost("/api/account/login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel creds)
@@ -73,6 +83,10 @@ namespace TimeSheetAPI.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Logout authenitcated users
+        /// </summary>
+        /// <returns>{boolean}</returns>
         [Authorize]
         [HttpPost("/api/account/logout")]
         public async Task<IActionResult> Logout()
@@ -90,6 +104,10 @@ namespace TimeSheetAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Check if token is still valid, used by angular guard
+        /// </summary>
+        /// <returns>{boolean}</returns>
         [Authorize]
         [HttpPost("/api/account/authenticate")]
         public IActionResult Authenticated()
