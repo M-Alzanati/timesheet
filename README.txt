@@ -18,9 +18,10 @@ Done Now we are ready to build API
 B- Build .Net Core Application:
     1- Open Termincal or cmd then navigate to > timesheet-tool/src/TimeSheetAPI
     2- Install required packages by typing > dotnet restore
-    3- Migrate Users database by typing > dotnet ef database update --context IdentityDataContext
-    3- Migrate TimeSheet database by typing > dotnet ef database update --context TimeSheetDbContext
-    4- build application by typing > dotnet watch run
+    3- Open timesheet-tool/src/TimeSheetAPI/appsettings.json and change connectionstring to your MySql server
+    4- Migrate Users database by typing > dotnet ef database update --context IdentityDataContext
+    5- Migrate TimeSheet database by typing > dotnet ef database update --context TimeSheetDbContext
+    6- build application by typing > dotnet watch run
 
 Done !!
 
